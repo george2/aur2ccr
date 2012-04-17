@@ -30,7 +30,7 @@ def main():
             help="...or from a PKGBUILD and (optional) other files in <dir>")
     parser.add_argument("-C", "--cd", metavar="<newdir>",
             help="use <newdir> as the working directory instead of the current dir")
-    parser.add_argument("-t", "--temp", help="use $tmpdir as the build directory"
+    parser.add_argument("-t", "--temp", help="use $tmpdir as the build directory "
             "instead of the current dir (all finished src packgages will be "
             "moved into the current dir, like -c)", action="store_true")
     parser.add_argument("-l", "--log", metavar="<logfile>",
