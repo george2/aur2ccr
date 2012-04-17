@@ -13,12 +13,12 @@ def main():
             epilog="Report bugs at"
             ": <https://github.com/ccr-tools/aur2ccr/issues/>\n"
             "aur2ccr home: <https://github.com/ccr-tools/aur2ccr/>")
-    parser.add_argument("--maintainer", "-m", help="add maintainer information"
+    parser.add_argument("--maintainer", "-m", help="add maintainer information "
             "to each PKGBUILD before building")
     parser.add_argument("-e", "--edit",
-            help="edit the PKGBUILD for each package with $EDITOR before building",
+            help="edit the PKGBUILD for each package with $EDITOR before building ",
             action="store_true")
-    parser.add_argument("-c", "--consolidate", help="move all CCR source packages"
+    parser.add_argument("-c", "--consolidate", help="move all CCR source packages "
             "into the working directory", action="store_true")
     parser.add_argument("-i", "--install", help="install packages that build "
             "successfully, in order to test them", action="store_true")
