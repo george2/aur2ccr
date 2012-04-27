@@ -170,24 +170,29 @@ getarchname() {
 }
 
 depends() {  # get the dependencies from the PKGBUILD - stolen from 'ccr'
-  local pkgname=; local pkgbase=; local pkgver=; local pkgrel=; local url=; local arch=; local license=; local source=; local md5sums=; local srcdir=; local pkgdir=; local install=    # declare vars from the PKGBUILD as local, so aur2ccr doens't get confused
+  local makedepends=(); local pkgname=; local pkgbase=; local pkgver=; local pkgrel=; local url=; local arch=; local license=; local source=; local md5sums=; local srcdir=; local pkgdir=; local install=    # declare vars from the PKGBUILD as local, so aur2ccr doens't get confused
   debug "depends($@)"; debug "current dir: $(pwd; ls)"
+  depends=
   . PKGBUILD; IFS=$'\n'
-  depends=( $(echo -e "${depends[*]}\n${makedepends[*]}" | sed -e 's/=.*//' -e 's/>.*//' -e 's/<.*//'| sort -u) ); IFS=' '
+  depends=( $(echo -e "${depends[*]}\n${makedepends[*]}" | sed -e "s/=.*//; s/>.*//; s/<.*//; s/^$pkgname$//g" | sort -u) ); IFS=' '
   debug "depends=( ${depends[@]} )"
 }
 
 addmaintainer() {  # change maintainer info in the PKGBUILD
   debug "addmaintainer('$@')"
   sed -i 's/^# Maintainer: /# Contributor: /' PKGBUILD
-  (printf "# Maintainer: ${maintainer}\n$(cat PKGBUILD)" > PKGBUILD.1 && mv PKGBUILD.1 PKGBUILD) || return 1
+  ed -s PKGBUILD << EOF
+  1i
+# Maintainer: ${maintainer}
+.
+  wq
 }
 
 addad() {
   debug "addad('$@')"
   ed -s PKGBUILD << EOF && msg "Ad added. Thanks for supporting aur2ccr! :)"
 2i
-# Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr)
+# Contributor: aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)
 .
 wq
 EOF
@@ -654,14 +659,14 @@ usage() {
   echo "Other: "
   echo "  -s, --setup            perform setup-related tasks (not required)"
   echo "  -a, --addad            add an aur2ccr advertisement - add as Contributor: "
-  echo "                         'aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr)'"
+  echo "                         'aur2ccr (http://ddg.gg/?q=!ccr+aur2ccr&t=chakra)'"
   echo "  -h, --help             display this help and exit"
   echo "  -v, --version          print version information and exit" 
   echo 
   echo "For debugging, use: debug=1 $(basename $0) [OPTIONS] [PACKAGES]"
   echo
-  echo "Report bugs at: <https://github.com/redhat69/aur2ccr/issues/>"
-  echo "aur2ccr home: <https://github.com/redhat69/aur2ccr/>" ; debug "exiting..."
+  echo "Report bugs at: <https://github.com/ccr-tools/aur2ccr/issues/>"
+  echo "aur2ccr home: <https://github.com/ccr-tools/aur2ccr/>" ; debug "exiting..."
   exit 0
 }
 
