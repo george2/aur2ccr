@@ -1,5 +1,5 @@
 #!/bin/bash
-# aur2ccr - version 0.7.3
+# aur2ccr - version 0.7.4
 # Pull information from AUR or Arch repos, and make source packages that are ready for uploading to CCR.
 # Usage: aur2ccr [OPTIONS] [PACKAGES]
 # -- CREDITS --
@@ -15,7 +15,7 @@
 #  ...and all others who have used aur2ccr or helped in some other way.
 
 # internal settings - you can modify some of these in aur2ccr.conf
-pname="aur2ccr"         pver="0.7.3"
+pname="aur2ccr"         pver="0.7.4"
 confdir="/etc/aur2ccr"  lconfdir=~/.aur2ccr # must be unquoted to use ~ substitution
 tmpdir="/tmp/aur2ccr"   ltmpdir=~/tmp/aur2ccr
 namesconf="names.conf"  apconf="archrepos.pacman.conf"  
@@ -816,7 +816,7 @@ elif [[ -r "$lconfdir/$namesconf" ]]; then
   namesconf="$lconfdir/$namesconf"
 fi
 # fix empty/unset variables to prevent errors
-pname="${pname-aur2ccr}"                 pver="${pver-0.7.3}"
+pname="${pname-aur2ccr}"                 pver="${pver-0.7.4}"
 confdir="${confdir-/etc/aur2ccr}"        lconfdir="${lconfdir-~/.aur2ccr}"
 tmpdir="${tmpdir-/tmp}"                  namesconf="${namesconf-names.conf}"
 apconf="${apconf-archrepos.pacman.conf}" acconf="${acconf-aur2ccr.conf}"
