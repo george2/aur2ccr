@@ -77,6 +77,20 @@ clean() {  # clean up temp files
   exit 1
 }
 
+disclaimer() {
+  warn "This script was designed to help make porting packages from the AUR and"
+  warn "Arch repos to CCR easier. It was NOT designed to help you install Arch"
+  warn "packages. Misuse of this script WILL result in a broken system, and will"
+  warn "make it impossible for the Chakra developers to troubleshoot any problems"
+  warn "you may have. If the script continues to be misused, it will be removed"
+  warn "from the CCR, and no longer available for those who use it correctly."
+  warn ""
+  warn "If you have read and understood the above warning, press 'Enter' to continue."
+  read disclaimer
+  mkdir -p ~/.aur2ccr && touch ~/.aur2ccr/run
+  return 0
+}
+
 initarchr() {	# set up the arch repo vars, so we only need to sudo once
   debug "initarchr('$@')"
   if sudo pacman -Sy --config "$paconf"; then
@@ -775,6 +789,8 @@ debug "main('$@') /* version = $pver */"
 # prevent running the script as root
 ([[ $EUID -eq 0 ]] && (err "This script must not be run as root!"; err "aur2ccr will ask for your password if needed."; \
   err "Exiting..."; debug "script run as root, exiting"; exit 0) && exit 0) && exit 1
+# First-run disclaimer
+[[ -e ~/.aur2ccr/run ]] || disclaimer
 # test for important programs that may not be installed 
 for bin in ${programs[@]}; do
   debug "checking for $bin..."
