@@ -27,3 +27,8 @@ Or edit the configuration files in /etc/aur2ccr/ by hand. All configuration file
 
 # Documentation:
 Usage information for this tool can be found in the help output (`aur2ccr -h` or `aur2ccr --help`) and the man page (`man 8 aur2ccr`). Configuration options and files are documented in the aur2ccr man page (`man 8 aur2ccr`), and in the global configuration file (`less /etc/aur2ccr/aur2ccr.conf`).
+
+# CREDITS
+This script uses the information on converting Arch/AUR files to CCR from http://chakra-linux.org/wiki/index.php/How_to_upload_a_package_to_CCR_when_it_exists_on_Arch_or_Aur
+Portions of this script have been taken from "CCR - A Chakra Community Repository helper", which was in turn forked from "Packer by Matthew Bruenig", a GPL3 bash script.
+Thanks to all the people who have helped aur2ccr grow, and to the Chakra devs for creating such an awesome distro. 
