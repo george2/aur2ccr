@@ -93,12 +93,11 @@ disclaimer() {
 
 initarchr() {	# set up the arch repo vars, so we only need to sudo once
   debug "initarchr('$@')"
-  if sudo pacman -Sy --config "$paconf"; then
-    areplist=$(pacman --config "$paconf" -Ssq)
-    afullist=$(pacman --config "$paconf" -Ss)
+  [[ -e "$tmpdir/local" ]] || ln -s /var/lib/pacman/local "$tmpdir/"
+  if fakeroot pacman -Sy --config "$paconf" --dbpath "$tmpdir/" 2>>"$tmpdir/log"; then
+    areplist=$(pacman --config "$paconf" -Ssq --dbpath "$tmpdir/")
+    afullist=$(pacman --config "$paconf" -Ss --dbpath "$tmpdir/")
     archrinit=1
-    debug "sudo pacman -Syy ..."
-    sudo pacman -Syy >&2> /dev/null
   else
     err "An error occurred while checking Arch repos."
     debug "exiting..."
