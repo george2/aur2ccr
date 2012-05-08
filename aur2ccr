@@ -1,5 +1,5 @@
 #!/bin/bash
-# aur2ccr - version 0.7.4
+# aur2ccr - version 0.7.5
 # Pull information from AUR or Arch repos, and make source packages that are ready for uploading to CCR.
 # Usage: aur2ccr [OPTIONS] [PACKAGES]
 # -- CREDITS --
@@ -15,7 +15,7 @@
 #  ...and all others who have used aur2ccr or helped in some other way.
 
 # internal settings - you can modify some of these in aur2ccr.conf
-pname="aur2ccr"         pver="0.7.4"
+pname="aur2ccr"         pver="0.7.5"
 confdir="/etc/aur2ccr"  lconfdir=~/.aur2ccr # must be unquoted to use ~ substitution
 tmpdir="/tmp/aur2ccr"   ltmpdir=~/tmp/aur2ccr
 namesconf="names.conf"  apconf="archrepos.pacman.conf"  
@@ -85,9 +85,9 @@ disclaimer() {
   warn "you may have. If the script continues to be misused, it will be removed"
   warn "from the CCR, and no longer available for those who use it correctly."
   warn ""
-  warn "If you have read and understood the above warning, press 'Enter' to continue."
+  warn "If you have read and understood the above warning, press Enter to continue."
   read disclaimer
-  mkdir -p ~/.aur2ccr && touch ~/.aur2ccr/run
+  mkdir -p "$lconfdir" && touch "$lconfdir/run"
   return 0
 }
 
@@ -790,7 +790,7 @@ debug "main('$@') /* version = $pver */"
 ([[ $EUID -eq 0 ]] && (err "This script must not be run as root!"; err "aur2ccr will ask for your password if needed."; \
   err "Exiting..."; debug "script run as root, exiting"; exit 0) && exit 0) && exit 1
 # First-run disclaimer
-[[ -e ~/.aur2ccr/run ]] || disclaimer
+[[ -e "$lconfdir/run" ]] || disclaimer
 # test for important programs that may not be installed 
 for bin in ${programs[@]}; do
   debug "checking for $bin..."
@@ -848,13 +848,13 @@ for pkgname in $packages; do
   echo "$pkgname" | grep -q '^..' || (err "Package names must be at least two characters in length"; exit 1) || exit 1 # if the package name is not at least 2 chars, lots of stuff wiull fail.
   if isinccr $pkgname; then
     msg "$pkgname is already in CCR or main Chakra repos."
-    continue
+    [[ $goanyway == 1 ]] || continue
   elif namelookup $pkgname; then
     msg "$apkgname is already in CCR or main Chakra repos as $cpkgname."
-    continue
+    [[ $goanyway == 1 ]] || continue
   elif vcsver $pkgname; then
     msg "$pkgname is already in CCR or main Chakra repos as $vpkgname."
-    continue
+    [[ $goanyway == 1 ]] || continue
   else
     checkaur $pkgname
   fi
@@ -868,9 +868,13 @@ if [[ "$badpkgs" -gt 0 ]]; then
   debug "at least $badpkgs packages failed..."
 else
   msg "$badpkgs package(s) failed"; debug "0 pkgs failed, exiting..."
-  warn "Remember, just because aur2ccr seems to have succeeded, does not mean the package(s)"
-  warn "will work. Please thoroughly test all packages BEFORE uploading them to CCR."
-  warn "Broken packages may be removed without warning."
+  warn "Remember, just because aur2ccr seems to have succeeded, does not mean the"
+  warn "package(s) will work. Please thoroughly test all packages BEFORE uploading"
+  warn "them to CCR. Broken packages may be removed without warning."
+  warn "${RED}NEVER${ENDCOLOR} install packages from the Arch repos or AUR that already exist in the"
+  warn "Chakra repos, or that conflict with packages in the Chakra repos in any "
+  warn "way. Installing packages created with aur2ccr may result in a broken system."
+  warn "${RED}YOU HAVE BEEN WARNED!${ENDCOLOR}"
   exit 0
 fi
 ([[ -n "$failedpkgs" ]] && (err "The bad package(s) are:"; err "$failedpkgs"; debug "exiting..."; exit 1)) || exit 0
