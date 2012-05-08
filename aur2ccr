@@ -842,12 +842,18 @@ for pkgname in $packages; do
   echo "$pkgname" | grep -q '^..' || (err "Package names must be at least two characters in length"; exit 1) || exit 1 # if the package name is not at least 2 chars, lots of stuff wiull fail.
   if isinccr $pkgname; then
     msg "$pkgname is already in CCR or main Chakra repos."
+    msg "Installing packages from Arch that already exist in the Chakra repos"
+    msg "or CCR may result in system instability. Skipping this package."
     [[ $goanyway == 1 ]] || continue
   elif namelookup $pkgname; then
     msg "$apkgname is already in CCR or main Chakra repos as $cpkgname."
+    msg "Installing packages from Arch that already exist in the Chakra repos"
+    msg "or CCR may result in system instability. Skipping this package."
     [[ $goanyway == 1 ]] || continue
   elif vcsver $pkgname; then
     msg "$pkgname is already in CCR or main Chakra repos as $vpkgname."
+    msg "Installing packages from Arch that already exist in the Chakra repos"
+    msg "or CCR may result in system instability. Skipping this package."
     [[ $goanyway == 1 ]] || continue
   else
     checkaur $pkgname
