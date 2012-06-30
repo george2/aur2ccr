@@ -130,7 +130,6 @@ def get_location():
         for line in coun_file:
             logging.debug(line)
             if "your ip address" in line.lower():
-                logging.info(line)
                 try:
                     result = re.search(regex_country, line).groupdict()
                     logging.debug("The result is {}".format(result))
