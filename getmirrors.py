@@ -105,7 +105,7 @@ alt_country_names["Vietnam"] = "VN"
 
 # the webadresses of duckduckgo and arch linux
 duckduckgo = "https://duckduckgo.com/lite/?q=ip"
-archlinux = "http://www.archlinux.org/mirrorlist/?country={}&protocol=ftp&protocol=http&ip_version=4&use_mirror_status=on"
+archlinux = "http://www.archlinux.org/mirrorlist/?country={}&protocol=http&ip_version=4&use_mirror_status=on"
 
 
 def download(url):
