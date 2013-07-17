@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>aur2ccr by george2</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">aur2ccr</h1>
+        <p class="header"></p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/george2/aur2ccr/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/george2/aur2ccr/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/george2/aur2ccr">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/george2">george2</a></p>
+
+
+      </header>
+      <section>
+        <h2>
+<a name="aur2ccr" class="anchor" href="#aur2ccr"><span class="octicon octicon-link"></span></a>aur2ccr</h2>
+
+<p>Pull information from AUR or Arch repos, and make source packages that are ready for uploading to CCR.</p>
+
+<p>This script uses the information on converting Arch/AUR packages to CCR source packages from <a href="http://chakra-linux.org/wiki/index.php/How_to_upload_a_package_to_CCR_when_it_exists_on_Arch_or_Aur">http://chakra-linux.org/wiki/index.php/How_to_upload_a_package_to_CCR_when_it_exists_on_Arch_or_Aur</a></p>
+
+<h1>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>Todo:</h1>
+
+<p>See issues (<a href="https://github.com/redhat69/aur2ccr/issues/">https://github.com/redhat69/aur2ccr/issues/</a>).
+This script is currently undergoing a rewrite from bash to Python, so new features will not be implemented until that change has been completed. </p>
+
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation:</h1>
+
+<p>Installation for aur2ccr is simple. Just run
+<code>ccr -S aur2ccr</code>, <code>ccr -S aur2ccr-git</code>, or </p>
+
+<pre><code>git clone git://github.com/redhat69/aur2ccr.git
+cd aur2ccr
+make
+sudo make install
+</code></pre>
+
+<p>This will install the script itself, the needed configuration files, and the <strong>aur2ccr(8)</strong> man page. There is no need for a <code>./configure</code>, as the script only works on one platform: Chakra Linux.</p>
+
+<h1>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration:</h1>
+
+<p>To configure aur2ccr, just run</p>
+
+<pre><code>aur2ccr --setup
+</code></pre>
+
+<p>Or edit the configuration files in /etc/aur2ccr/ by hand. All configuration files in /etc/aur2ccr/ can also be copied to ~/.aur2ccr/. Local conf files take precedence over global ones. </p>
+
+<h1>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation:</h1>
+
+<p>Usage information for this script can be found in the help output (<code>aur2ccr -h</code> or <code>aur2ccr --help</code>) and the man page (<code>man 8 aur2ccr</code>). Configuration options and files are documented in the aur2ccr man page (<code>man 8 aur2ccr</code>), and in the global configuration file (<code>less /etc/aur2ccr/aur2ccr.conf</code>).</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
