@@ -316,7 +316,7 @@ dotherest() {  # this is crap
   [[ "$addad" == 1 ]] && addad
   if [[ "$resetrel" == 1 ]]; then
       debug "reset pkgrel"
-      sed -rie 's/pkgrel=[0-9]+/pkgrel=1/g' PKGBUILD
+      sed -ri 's/pkgrel=[0-9]+/pkgrel=1/g' PKGBUILD
   fi
   debug "if uchksums..."
   (uchksums && msg "checksums for $pkgname updated") || warn "checksums for $pkgname could not be updated!"
