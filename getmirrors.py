@@ -122,14 +122,14 @@ def download(url):
 def get_location():
     logging.info("Determining your location...")
     regex_country = re.compile(r"""
-              ,\s(?P<oneword>([a-zA-Z]+))<\/a> # one-word countries
+              ((?P<oneword>([a-zA-Z])+?)\.) # one-word countries
             | (?P<twoword>(([a-zA-Z])+?\s[a-zA-Z]+))((\s([,(]))|\.) #two-word countries
             """, re.VERBOSE)
     with download(duckduckgo) as coun_file:
         country = ""
         for line in coun_file:
             logging.debug(line)
-            if "your ip address" in line.lower():
+            if "(your IP address)" in line:
                 try:
                     result = re.search(regex_country, line).groupdict()
                     logging.debug("The result is {}".format(result))
