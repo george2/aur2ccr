@@ -414,8 +414,6 @@ makeccrpkg() {  # grab a package from AUR, and make it into a CCR-ready src pack
   debug "makeccrpkg('$@')"
   cd "$startdir"
   local pkgname=$1
-  mkdir -p "$pkgname" || (err "cannot create directory '$startdir/$pkgname'"; logerr $pkgname; exit 1) || return 1
-  cd "$pkgname"
   [[ -r "$pkgname.tar.gz" ]] && rm "$pkgname.tar.gz"
   wget "https://aur.archlinux.org/packages/$(echo "$pkgname" | sed 's/\(..\).*/\1/')/$pkgname/$pkgname.tar.gz" || (err "There was an error while trying to download the package."; logerr $pkgname; exit 1) || return 1
   (tar -xzf "$pkgname.tar.gz" && rm "$pkgname.tar.gz") || (err "tar could not extract the archive"; logerr $pkgname; exit 1) || return 1
@@ -438,8 +436,6 @@ makeccrpkg_r() {    # grab a package from Arch repos, and make it into a CCR-rea
   debug "makeccrpkg_r('$@')"
   cd "$startdir"
   local pkgname=$1
-  mkdir -p "$pkgname" || (err "cannot create directory '$startdir/$pkgname'"; logerr $pkgname; exit 1) || return 1
-  cd "$pkgname"
   [[ -r "$pkgname.tar.gz" ]] && rm "$pkgname.tar.gz"
   # get Arch package with PKGBUILD, .install, etc, using perl or whatever - extract the package if needed
   getarchname $pkgname
