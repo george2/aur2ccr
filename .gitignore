@@ -1,3 +1,2 @@
-*.pyc
-.ropeproject
-.__pycache__
+*.py[cdo]
+*.egg-info/
