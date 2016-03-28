@@ -11,7 +11,7 @@ SRC_URL = PROJECTS_URL + "svntogit/packages.git/plain/{pkgname}/trunk/"
 CHECK_URL = SRC_URL + "PKGBUILD"
 
 def search(query):
-    r = requests.get(SEARCH_URL + sys.argv[1])
+    r = requests.get(SEARCH_URL + query)
     data = json.loads(r.text)
     return data['results']
 
