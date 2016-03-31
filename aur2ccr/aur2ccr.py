@@ -84,6 +84,7 @@ def dependency_chain(pkgname):
 def get_all(pkgname):
     """Get source files for pkgname and its missing dependencies"""
     failed = []
+    print("downloading source files...")
     for pkg in dependency_chain(pkgname):
         try:
             get_source_files(pkg)
