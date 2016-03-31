@@ -10,12 +10,12 @@ def main():
     )
 
     parser.add_argument('-v', '--version', action='version',
-    		        help="show version information and exit",
-		        version='aur2ccr {v}'.format(v=__version__))
+                        help="show version information and exit",
+                        version='aur2ccr {v}'.format(v=__version__))
     parser.add_argument('package', nargs='+',
-			help='a package in the Arch repos or AUR')
+                        help='a package in the Arch repos or AUR')
     parser.add_argument('--search', action='store_true',
-			help='search instead of downloading')
+                        help='search instead of downloading')
 
     args = parser.parse_args()
     if args.search:
