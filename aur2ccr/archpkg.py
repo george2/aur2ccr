@@ -8,6 +8,7 @@ import requests
 SEARCH_URL = "https://www.archlinux.org/packages/search/json/?q="
 PROJECTS_URL = "https://projects.archlinux.org/"
 SRC_URL = PROJECTS_URL + "svntogit/packages.git/plain/{pkgname}/trunk/"
+COMMUNITY_URL = SRC_URL.replace('packages.git', 'community.git')
 CHECK_URL = SRC_URL + "PKGBUILD"
 
 def search(query):
@@ -27,9 +28,16 @@ def get_source_files(pkgname, workingdir="."):
                     if attr[0] == 'href':
                         self.links.append(attr[1])
 
-    r = requests.get(SRC_URL.format(pkgname=pkgname))
-    # Raise if 404
-    r.raise_for_status()
+    try:
+        r = requests.get(SRC_URL.format(pkgname=pkgname))
+        # Raise if 404
+        r.raise_for_status()
+    except requests.exceptions.HTTPError:
+        # Check community repo
+        r = requests.get(COMMUNITY_URL.format(pkgname=pkgname))
+        # Raise if 404
+        r.raise_for_status()
+
     p = HTMLLinkParser()
     p.feed(r.text)
     for link in p.links[1:]:
