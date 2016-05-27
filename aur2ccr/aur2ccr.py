@@ -4,9 +4,9 @@ import subprocess
 import json
 import re
 import os
+import itertools
 
 import requests
-from toposort import toposort_flatten
 import ccr
 import aur
 from chaser import pacman
@@ -79,7 +79,7 @@ def recurse_depends(pkgname, graph=None):
 def dependency_chain(pkgname):
     """Return an ordered list of dependencies for a package"""
     depends = recurse_depends(pkgname)
-    return toposort_flatten(depends)
+    return set(list(depends.keys()) + list(itertools.chain.from_iterable(depends.values())))
 
 def get_all(pkgname):
     """Get source files for pkgname and its missing dependencies"""
