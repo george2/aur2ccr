@@ -19,6 +19,9 @@ def get_source_files(pkgname, workingdir="."):
     """Download the source tarball and extract it"""
     if not os.path.exists(workingdir):
         os.mkdir(workingdir)
+    if os.path.exists(os.path.join(workingdir, pkgname)):
+        # already exists locally, skip it
+        return False
 
     try:
         archpkg.get_source_files(pkgname)
@@ -28,6 +31,8 @@ def get_source_files(pkgname, workingdir="."):
         r.raise_for_status()
         tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
         tar.extractall(workingdir)
+
+    return True
 
 def recurse_depends(pkgname, graph=None):
     """Build a dependency graph"""
